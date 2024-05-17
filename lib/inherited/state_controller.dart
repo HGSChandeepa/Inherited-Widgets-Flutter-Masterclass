@@ -11,6 +11,10 @@ class StateController extends StatefulWidget {
     required this.user,
   });
 
+  // the of method is used to access the StateControllerState class
+
+  // here the context.dependOnInheritedWidgetOfExactType<InheritedContainer>() to find the nearest InheritedContainer in the widget tree and returns its data (which is the StateControllerState).
+
   static StateControllerState of(BuildContext context) {
     final inheritedContainer =
         context.dependOnInheritedWidgetOfExactType<InheritedContainer>();
@@ -28,11 +32,15 @@ class StateController extends StatefulWidget {
 class StateControllerState extends State<StateController> {
   late User user;
 
+  //The initState method initializes the user with the value passed from the StateController widget.
+
   @override
   void initState() {
     super.initState();
     user = widget.user;
   }
+
+  // It uses the setState method to notify the framework that the state has changed, triggering a rebuild of the widget tree.
 
   void updateEventInfo({String? name, String? email, String? password}) {
     setState(() {
@@ -53,6 +61,8 @@ class StateControllerState extends State<StateController> {
   }
 }
 
+// This class is crucial for propagating changes in state down the widget tree, allowing descendant widgets to access and react to state changes.
+
 class InheritedContainer extends InheritedWidget {
   final StateControllerState data;
 
@@ -63,6 +73,8 @@ class InheritedContainer extends InheritedWidget {
   }) : super(key: key, child: child);
 
   @override
+
+  //This method determines whether the widgets that depend on this InheritedWidget should be rebuilt when the InheritedWidget changes.
   bool updateShouldNotify(InheritedContainer oldWidget) {
     return true;
   }
